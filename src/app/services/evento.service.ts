@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Evento } from '../models/evento';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root'
 })
 export class EventoService {
-    private eventos: Evento[] = []; // Almacena la lista de eventos 
+  private apiUrl = 'http://localhost:3000/eventos';
 
-    // Método para agregar un nuevo evento
-    agregarEvento(evento: Evento) {
-        this.eventos.push(evento);
-    }
+  constructor(private http: HttpClient) {}
 
-    // Método para obtener todos los eventos
-    obtenerEventos(): Evento[] {
-        return this.eventos;
-    }
+  obtenerEventos(): Observable<Evento[]> {
+    return this.http.get<Evento[]>(this.apiUrl);
+  }
 
-   
+  eliminarEvento(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }

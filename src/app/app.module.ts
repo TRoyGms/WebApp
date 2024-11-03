@@ -1,30 +1,16 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms'; // Asegúrate de que esto esté importado
+import { RouterModule, Routes } from '@angular/router';
+import { InicioComponent } from './components/inicio/inicio.component';
+import { RegistroComponent } from './components/registro/registro.component';
 
-import { AppComponent } from './app.component';
-import { ParticipanteComponent } from './components/participante/participante.component';
-import { EventoComponent } from './components/evento/evento.component';
+const routes: Routes = [
+  { path: '', component: InicioComponent },
+  { path: 'crear-evento', component: RegistroComponent },
+  { path: '**', redirectTo: '' } // Redirecciona rutas desconocidas a inicio
+];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ParticipanteComponent,
-    EventoComponent,
-    // otros componentes...
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule, // Asegúrate de añadir FormsModule aquí
-    RouterModule.forRoot([
-      { path: 'participantes', component: ParticipanteComponent },
-      { path: 'eventos', component: EventoComponent },
-      { path: '', redirectTo: '/participantes', pathMatch: 'full' },
-      { path: '**', redirectTo: '/participantes' },
-    ]),
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-export class AppModule {}
+export class AppRoutingModule {}
